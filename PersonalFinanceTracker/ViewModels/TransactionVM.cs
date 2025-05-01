@@ -13,7 +13,7 @@ namespace PersonalFinanceTracker.ViewModels
 {
     public partial class TransactionVM : ObservableObject
     {
-        private readonly Transaction _transaction;
+        private readonly Transaction _transaction = new();
 
         public Guid Id { get; set; }
 
@@ -42,12 +42,9 @@ namespace PersonalFinanceTracker.ViewModels
         [ObservableProperty]
         private DateTime _lastModified = DateTime.Now;
 
-        public TransactionVM(Transaction? txn = null)
+        public TransactionVM(Transaction txn)
         {
-            if (txn == null)
-                _transaction = new();
-            else
-                _transaction = txn;
+            _transaction = txn;
 
             Id = _transaction.Id;
             Type = _transaction.Type;
@@ -61,12 +58,9 @@ namespace PersonalFinanceTracker.ViewModels
             LastModified = _transaction.LastModified;
         }
 
-        public TransactionVM(TransactionDto? dto = null)
+        public TransactionVM(TransactionDto dto)
         {
-            if (dto == null)
-                _transaction = new();
-            else
-                _transaction = TransactionMapper.ToEntity(dto);
+            _transaction = TransactionMapper.ToEntity(dto);
 
             Id = _transaction.Id;
             Type = _transaction.Type;
@@ -80,22 +74,6 @@ namespace PersonalFinanceTracker.ViewModels
             LastModified = _transaction.LastModified;
         }
 
-
-        public TransactionVM(TransactionType type, DateTime date, decimal amount, string category, string description)
-        {
-            _transaction = new Transaction(type, date, amount, category, description);
-
-            Id = _transaction.Id;
-            Type = _transaction.Type;
-            Date = _transaction.Date;
-            Amount = _transaction.Amount;
-            Category = _transaction.Category;
-            Description = _transaction.Description;
-
-            IsSynced = _transaction.IsSynced;
-            IsDeleted = _transaction.IsDeleted;
-            LastModified = _transaction.LastModified;
-        }
 
         public void Update(TransactionType type, DateTime date, decimal amount, string category, string description)
         {

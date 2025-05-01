@@ -7,7 +7,6 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:PersonalFinanceTracker.Views"
              xmlns:behaviors="clr-namespace:PersonalFinanceTracker.Behaviors"
-             xmlns:helpers="clr-namespace:PersonalFinanceTracker.Helpers.UI"
              xmlns:converters="clr-namespace:PersonalFinanceTracker.Converters"
              xmlns:main="clr-namespace:PersonalFinanceTracker"
              x:Name="TransactionViewName"
@@ -26,24 +25,21 @@
                 <x:Type TypeName="main:TransactionType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <converters:StringToDecimalConverter x:Key="StringToDecimalConverter"/>
-        <converters:EmptyStringToPlaceholderTextConverter x:Key="EmptyStringToPlaceholderTextConverter"/>
+        
         <converters:BooleanInverterConverter x:Key="BooleanInverterConverter"/>
+        
     </UserControl.Resources>
     
     <Grid ShowGridLines="True">
 
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>-->
-
+        <!--LogOut-->
         <Button Grid.ColumnSpan="2" 
                 Content="{Binding Username}"
                 HorizontalAlignment="Right"
                 Margin="5" Width="80" Height="25"
                 Command="{Binding LogoutCommand}"/>
 
+        <!--Transaction Editing-->
         <StackPanel Grid.Row="1" Grid.Column="0" 
                     VerticalAlignment="Center"
                     Margin="20 0 20 0" >
@@ -178,6 +174,7 @@
 
         </StackPanel>
 
+        <!--Transaction History-->
         <DataGrid Grid.Row="2" Grid.Column="1"
                   ItemsSource="{Binding Transactions}" 
                   SelectedItem="{Binding SelectedTransaction}"

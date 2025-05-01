@@ -38,7 +38,7 @@ namespace PersonalFinanceTracker.Repositories
             if (column.FindById(txn.Id) != null)
                 return false;
 
-            BsonValue val = column.Insert(txn);
+            column.Insert(txn);
             return true;
         }
 

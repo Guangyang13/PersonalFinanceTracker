@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LiteDB;
 using Microsoft.VisualBasic;
-using PersonalFinanceTracker.Migrations;
 using PersonalFinanceTracker.Models.Dtos;
 using System;
 using System.Collections.Generic;
@@ -39,16 +38,6 @@ namespace PersonalFinanceTracker.Models.Entity
             Description = description;
         }
 
-        public void Update(TransactionType type, DateTime date, decimal amount,  string category, string description)
-        {
-            Type = type;
-            Amount = amount;
-            Date = date;
-            Category = category;
-            Description = description;
-            LastModified = DateTime.Now;
-        }
-
         public void Update(Transaction txn)
         {
             Type = txn.Type;
@@ -56,16 +45,6 @@ namespace PersonalFinanceTracker.Models.Entity
             Date = txn.Date;
             Category = txn.Category;
             Description = txn.Description;
-            LastModified = DateTime.Now;
-        }
-
-        public void Update(TransactionDto dto)
-        {
-            Type = dto.Type;
-            Amount = dto.Amount;
-            Date = dto.Date;
-            Category = dto.Category;
-            Description = dto.Description;
             LastModified = DateTime.Now;
         }
 

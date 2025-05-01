@@ -31,7 +31,6 @@ namespace PersonalFinanceTracker.ViewModels
         private readonly IAuthService _authService;
         private readonly INavigationService _navigationService;
 
-
         public RegistrationVM(IAuthService authService, INavigationService navigationService)
         {
             _authService = authService;
@@ -70,6 +69,7 @@ namespace PersonalFinanceTracker.ViewModels
                 StatusMessageVisibility = Visibility.Visible;
                 return;
             }
+
             Cancel();
         }
 

@@ -8,7 +8,7 @@ namespace PersonalFinanceTracker.Interfaces.Auth
 {
     public interface IUserSessionService
     {
-        void SetSession(string username, string? token);
+        void SetSession(string username, string token);
         void ClearSession();
 
         string Username { get; }

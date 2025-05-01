@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PersonalFinanceTracker.Data;
 using PersonalFinanceTracker.Interfaces.Auth;
 using PersonalFinanceTracker.Interfaces.Infrastructure;
 using PersonalFinanceTracker.Interfaces.Navigation;
@@ -40,6 +39,11 @@ namespace PersonalFinanceTracker
 
         private void ConfigureServices(ServiceCollection services)
         {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             services.AddSingleton<MainWindow>();
             services.AddSingleton<MainWindowVM>();
 
@@ -48,22 +52,14 @@ namespace PersonalFinanceTracker
 
             services.AddTransient<ITransactionRepository, TransactionRepository>();
 
-            services.AddHttpClient<IAuthService, AuthService>(options => options.BaseAddress = new Uri("http://localhost:5263/"));
-            services.AddHttpClient<INetworkService, NetworkService>(options => options.BaseAddress = new Uri("http://localhost:5263/"));
-            services.AddHttpClient<ITransactionService, TransactionService>(options => options.BaseAddress = new Uri("http://localhost:5263/"));
+            services.AddHttpClient<IAuthService, AuthService>(options => options.BaseAddress = new Uri(config["ApiSettings:BaseUrl"] ?? "http://localhost:5263/"));
+            services.AddHttpClient<INetworkService, NetworkService>(options => options.BaseAddress = new Uri(config["ApiSettings:BaseUrl"] ?? "http://localhost:5263/"));
+            services.AddHttpClient<ITransactionService, TransactionService>(options => options.BaseAddress = new Uri(config["ApiSettings:BaseUrl"] ?? "http://localhost:5263/"));
 
             services.AddTransient<LoginVM>();
             services.AddTransient<RegistrationVM>();
             services.AddTransient<TransactionFormVM>();
 
-
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            //services.AddDbContextFactory<AppDbContext>
-            //    (options => options.UseSqlServer(config.GetConnectionString("Default")));
         }
     }
 
