@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalFinanceTracker", "PersonalFinanceTracker\PersonalFinanceTracker.csproj", "{504610B7-1970-4544-A06D-18E6B9E425A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceAPI", "..\FinanceAPI\FinanceAPI\FinanceAPI.csproj", "{56270751-6A6C-4F39-B0AA-76A734913C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceAPI", "FinanceAPI\FinanceAPI\FinanceAPI.csproj", "{56F02502-4988-4FE8-ADA0-1A50127B6450}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{504610B7-1970-4544-A06D-18E6B9E425A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{504610B7-1970-4544-A06D-18E6B9E425A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{504610B7-1970-4544-A06D-18E6B9E425A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56270751-6A6C-4F39-B0AA-76A734913C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56270751-6A6C-4F39-B0AA-76A734913C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56270751-6A6C-4F39-B0AA-76A734913C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56270751-6A6C-4F39-B0AA-76A734913C24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56F02502-4988-4FE8-ADA0-1A50127B6450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F02502-4988-4FE8-ADA0-1A50127B6450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F02502-4988-4FE8-ADA0-1A50127B6450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F02502-4988-4FE8-ADA0-1A50127B6450}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
