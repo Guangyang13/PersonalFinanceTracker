@@ -9,8 +9,8 @@ namespace PersonalFinanceTracker.Services.Auth
 {
     public class UserSessionService : IUserSessionService
     {
-        public string Username { get; private set; }
-        public string JwtToken { get; private set; }
+        public string Username { get; private set; } = string.Empty;
+        public string JwtToken { get; private set; } = string.Empty;
 
         public void SetSession(string username, string jwtToken)
         {
@@ -20,8 +20,8 @@ namespace PersonalFinanceTracker.Services.Auth
 
         public void ClearSession()
         {
-            Username = null;
-            JwtToken = null;
+            Username = string.Empty;
+            JwtToken = string.Empty;
         }
 
         public bool IsLoggedIn => !string.IsNullOrEmpty(JwtToken);

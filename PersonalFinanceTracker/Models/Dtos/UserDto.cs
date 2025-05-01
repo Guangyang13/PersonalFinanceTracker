@@ -8,13 +8,11 @@ namespace PersonalFinanceTracker.Models.Dtos
 {
     public class UserDto
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
 
-        public UserDto()
-        {
-            
-        }
+        public UserDto() { }
+
         public UserDto(string username, string password)
         {
             Username = username;

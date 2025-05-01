@@ -9,7 +9,8 @@ namespace PersonalFinanceTracker.Interfaces.Auth
     public interface IAuthService
     {
         Task<bool> LoginAsync(string username, string password);
-        Task<bool> IsUserRegisteredAsync(string username);
         Task<bool> RegisterAsync(string username, string password);
+        Task<bool> IsUserRegisteredAsync(string username);
+
     }
 }

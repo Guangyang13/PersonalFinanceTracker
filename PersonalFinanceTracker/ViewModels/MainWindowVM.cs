@@ -20,7 +20,7 @@ namespace PersonalFinanceTracker.ViewModels
         [ObservableProperty]
         private ObservableObject _currentView = null!;
 
-        private INavigationService _navigationService = null!;
+        private INavigationService _navigationService;
 
         public MainWindowVM(INavigationService navigationService)
         {
@@ -30,16 +30,5 @@ namespace PersonalFinanceTracker.ViewModels
             _navigationService.NavigateTo<LoginVM>();
         }
 
-        //[RelayCommand]
-        //private void NavigateToAddTransaction()
-        //{
-        //    _navigationService.NavigateTo<AddTransactionViewModel>();
-        //}
-
-        //[RelayCommand]
-        //private void NavigateToTransactionHistory()
-        //{
-        //    _navigationService.NavigateTo<TransactionHistoryViewModel>();
-        //}
     }
 }

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PersonalFinanceTracker.Helpers.Logic;
 using PersonalFinanceTracker.Interfaces.Auth;
 using PersonalFinanceTracker.Interfaces.Navigation;
 using PersonalFinanceTracker.Models;

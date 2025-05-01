@@ -1,5 +1,4 @@
-﻿using PersonalFinanceTracker.Helpers.Logic;
-using PersonalFinanceTracker.Interfaces.Auth;
+﻿using PersonalFinanceTracker.Interfaces.Auth;
 using PersonalFinanceTracker.Interfaces.Infrastructure;
 using PersonalFinanceTracker.Interfaces.Repository;
 using PersonalFinanceTracker.Interfaces.Transactions;
@@ -39,7 +38,6 @@ namespace PersonalFinanceTracker.Services.Transactions
             _transactionRepo = transactionRepository;
 
             _client = client;
-
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _userSvc.JwtToken);
 
         }
@@ -47,8 +45,10 @@ namespace PersonalFinanceTracker.Services.Transactions
         public async Task<List<TransactionDto>> GetBatchAsync()
         {
             if (!await _networkSvc.IsServerReachableAsync())
+            {
                 // Logging
                 return new List<TransactionDto>();
+            }
 
             var response = await _client.GetAsync("api/transaction");
             return await response.Content.ReadFromJsonAsync<List<TransactionDto>>() ?? new List<TransactionDto>();
@@ -106,14 +106,13 @@ namespace PersonalFinanceTracker.Services.Transactions
 
         public async Task<bool> SyncToLocal(List<TransactionVM> localTxnVMs)
         {
-            //var localDict = localTxnVMs.ToDictionary(t => t.Id);
 
             var serverTransactions= await GetBatchAsync();
             var serverDict = serverTransactions.ToDictionary(t => t.Id);
 
             foreach (var localTxnVM in localTxnVMs)
             {
-                if (!serverDict.TryGetValue(localTxnVM.Id, out var serverTxn))
+                if (!serverDict.TryGetValue(localTxnVM.Id, out var serverTxnDto))
                 {
                     if (!await CreateAsync(TransactionMapper.ToDto(localTxnVM)))
                     {
@@ -126,13 +125,15 @@ namespace PersonalFinanceTracker.Services.Transactions
                 else if (localTxnVM.IsDeleted == true)
                 {
                     if (!await DeleteAsync(localTxnVM.Id))
+                    {
                         // Logging
                         return false;
+                    }
 
                     _transactionRepo.Delete(localTxnVM.Id);
                 }
 
-                else if (serverTxn.LastModified < localTxnVM.LastModified)
+                else if (serverTxnDto.LastModified < localTxnVM.LastModified)
                 {
                     if (!await UpdateAsync(TransactionMapper.ToDto(localTxnVM)))
                     {
@@ -141,12 +142,11 @@ namespace PersonalFinanceTracker.Services.Transactions
                         return false;
                     }
 
-                    _transactionRepo.SetSynced(localTxnVM.Id, true);
                 }
 
-                else if (serverTxn.LastModified > localTxnVM.LastModified)
+                else if (serverTxnDto.LastModified > localTxnVM.LastModified)
                 {
-                    localTxnVM.Update(serverTxn);
+                    localTxnVM.Update(serverTxnDto);
                     if (!_transactionRepo.Update(localTxnVM.ToTransaction()))
                     {
                         // Logging
@@ -160,21 +160,23 @@ namespace PersonalFinanceTracker.Services.Transactions
                 _transactionRepo.SetSynced(localTxnVM.Id, true);
             }
 
-            foreach (var serverTxn in serverDict.Values)
+            foreach (var serverTxnDto in serverDict.Values)
             {
-                if (localTxnVMs.Any(txn => txn.Id == serverTxn.Id))
+                if (localTxnVMs.Any(txn => txn.Id == serverTxnDto.Id))
                     continue;
 
-                var newTxnVM = TransactionMapper.ToVM(serverTxn);
+                var newTxnVM = new TransactionVM(serverTxnDto);
                 localTxnVMs.Add(newTxnVM);
                 if (!_transactionRepo.Create(newTxnVM.ToTransaction()))
+                {
                     // Logging
                     return false;
+                }
 
+                newTxnVM.SetSynced(true);
                 _transactionRepo.SetSynced(newTxnVM.Id, true);
 
             }
-
 
             return true;
 

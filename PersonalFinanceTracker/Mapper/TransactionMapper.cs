@@ -65,18 +65,7 @@ namespace PersonalFinanceTracker.Mapper
                 Description = vm.Description,
                 LastModified = vm.LastModified
             };
-        }
-
-        public static TransactionVM ToVM(Transaction entity)
-        {
-            return new TransactionVM(entity);
-        }
-
-        public static TransactionVM ToVM(TransactionDto dto)
-        {
-            return new TransactionVM(dto);
-        }
-        
+        }        
 
     }
 }

@@ -97,7 +97,7 @@ namespace PersonalFinanceTracker.ViewModels
         {
             var localTransactions = _transactionRepo.GetBatch();
 
-            DisplayTransactions(localTransactions.Select(TransactionMapper.ToVM));
+            DisplayTransactions(localTransactions.Select(txn => new TransactionVM(txn)));
 
             if (!await _transactionSvc.SyncToLocal(Transactions.ToList()))
                 // Logging
@@ -124,15 +124,16 @@ namespace PersonalFinanceTracker.ViewModels
 
         private async Task<bool> CreateTransactionAsync()
         {
-            var transaction = new TransactionVM(Type, Date, Amount, Category, Description);
-            _transactionRepo.Create(transaction.ToTransaction());
+            var transaction = new Transaction(Type, Date, Amount, Category, Description);
+            var transactionVM = new TransactionVM(transaction);
+            _transactionRepo.Create(transaction);
 
-            Transactions.Add(transaction);
+            Transactions.Add(transactionVM);
 
             var isSuccess = await _transactionSvc.CreateAsync(TransactionMapper.ToDto(transaction));
-            if (isSuccess != transaction.IsSynced)
+            if (isSuccess != transactionVM.IsSynced)
             {
-                transaction.SetSynced(isSuccess);
+                transactionVM.SetSynced(isSuccess);
                 _transactionRepo.SetSynced(SelectedTransaction.Id, isSuccess);
             }
 
