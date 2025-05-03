@@ -23,14 +23,14 @@ A full-stack WPF application designed for tracking personal income and expenses,
 
 ## 🧰 Tech Stack
 
-| Layer          | Technology                                      |
+| Layer          | Technology                                       |
 |----------------|--------------------------------------------------|
 | Frontend       | WPF (.NET 8), MVVM Pattern                       |
 | Backend        | ASP.NET Core Web API                             |
 | Authentication | JWT (JSON Web Tokens)                            |
-| Database       | SQL Server / SQLite / LiteDB (optional local DB) |
+| Database       | SQL Server / LiteDB (optional local DB)          |
 | Data Access    | Entity Framework Core                            |
-| Tools          | Visual Studio, Postman, Swagger, Git             |
+| Tools          | Visual Studio, Git                               |
 
 ---
 
