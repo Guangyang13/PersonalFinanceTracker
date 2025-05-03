@@ -15,6 +15,7 @@ using PersonalFinanceTracker.ViewModels;
 using System.Configuration;
 using System.Data;
 using System.IO;
+using System.Net;
 using System.Windows;
 using static System.Formats.Asn1.AsnWriter;
 
@@ -29,6 +30,13 @@ namespace PersonalFinanceTracker
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            // This line bypasses SSL certificate validation for development purposes
+            ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+
+            // Ensure TLS 1.2 is being used
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             ServiceCollection serviceProvider = new ServiceCollection();
             ConfigureServices(serviceProvider);
             _services = serviceProvider.BuildServiceProvider();
